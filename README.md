@@ -4,7 +4,7 @@ Cuddly-woof is a canvas library that makes tasks like drawing colored boxes real
 # ._.
 That's the pokerface operator! Cuddly-woof functions can be chained. But when prefixed with the pokerface operator, they enter "data mode", in which they return an array with "this" as its first element and various useful data as its other elements.
 
-# ._._.
+# ._ ._.
 And that's the doublepokerface operator. It triggers "persistent data mode", which causes data mode to remain on until the pokerface operator is used again.
 
 ```
