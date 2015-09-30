@@ -1,4 +1,4 @@
-var CuddlyWoof = function() {
+var CuddlyWoof = function(width, height) {
   this.$ = this;
   datamode = false;
   persistentDatamode = false;
@@ -12,9 +12,18 @@ var CuddlyWoof = function() {
     }
     return this;
   }
+  this.size = function() {
+    return {
+      width: width,
+      height: height
+    }
+  }
   this.layer = {
     add: function() {
-      this.layers.push(document.createElement("canvas"));
+      var a = document.createElement("canvas");
+      a.width = width;
+      a.height = height;
+      this.layers.push(a);
       if (datamode) {
         if (!persistentDatamode) {
           datamode = false;
@@ -46,6 +55,20 @@ var CuddlyWoof = function() {
   })();
   this.layer.add();
   this.layerSet(0);
+  
+  this.fragments = [];
+  this.fragment = {
+    add: function(width, height) {
+      var fragment = new CuddlyWoof(width, height);
+      fragment.drawUp = function(x, y) {
+        this.image(fragment.canvas)
+      };
+      this.fragments.push();
+    }
+  }
+  this.draw = function(dest, x, y) {
+    dest.drawImage(this.canvas, x, y);
+  }
   
   this.color = function(color) {
     oldColor = this.ctx.fillStyle;
@@ -99,6 +122,10 @@ var CuddlyWoof = function() {
       }
     }
   };
+  this.image = function(image, x, y) {
+    this.ctx.drawImage(image, x, y);
+    return this;
+  }
   
   this.append = function(elem) {
     if (elem.constructor = String) {
