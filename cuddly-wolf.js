@@ -88,10 +88,10 @@ var CuddlyWoof = function(width, height) {
   
   $.clear = function(c) {
     if (c) {
-      var oldColor = $._color(c)[1];
-      $.$
+      var oldColor = $._().color(c)[1];
+      $
        .rect.fill(0, 0, $.canvas.width, $.canvas.height)
-       ._. color(oldColor); // cuddly-woof adds a whole new operator to JavaScript, the pokerface operator.
+       ._(). color(oldColor);
     } else {
       $.ctx.clearRect(0, 0, $.canvas.width, $.canvas.height);
     }
@@ -107,7 +107,7 @@ var CuddlyWoof = function(width, height) {
   $.rect = {
     fill: function(x, y, w, h, c) {
       if (c) {
-        var oldColor = $ ._. color(c)[1];
+        var oldColor = $ ._(). color(c)[1];
         $.ctx.fillRect(x, y, w, h);
         $.color(oldColor);
       } else {
