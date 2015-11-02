@@ -129,7 +129,7 @@ var CuddlyWoof = function(width, height) {
   }
   
   $.append = function(elem) {
-    if (elem.constructor = String) {
+    if (elem.constructor == String) {
       document.getElementById(elem).appendChild($.canvas);
     } else if (elem instanceof HTMLElement) {
       elem.appendChild($.canvas);
