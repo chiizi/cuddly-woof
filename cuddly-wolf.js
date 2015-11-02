@@ -1,8 +1,8 @@
 var CuddlyWoof = function(width, height) {
-  this.$ = this;
+  var $ = this;
   datamode = false;
   persistentDatamode = false;
-  this ._ = function() {
+  $ ._ = function() {
     if (persistentDatamode == true) {
       persistentDatamode = datamode = false;
     } else if (datamode == true) {
@@ -10,138 +10,139 @@ var CuddlyWoof = function(width, height) {
     } else {
       datamode = true;
     }
-    return this;
+    return $;
   }
-  this.size = function() {
+  $.size = function() {
     return {
       width: width,
       height: height
     }
-  }
-  this.layer = {
+  };
+  
+  $.layers = [];
+  $.layer = {
     add: function() {
       var a = document.createElement("canvas");
       a.width = width;
       a.height = height;
-      this.layers.push(a);
+      $.layers.push(a);
       if (datamode) {
         if (!persistentDatamode) {
           datamode = false;
         }
-        return [this, this.layers[this.layers.length - 1]];
+        return [$, $.layers[$.layers.length - 1]];
       } else {
-        return this;
+        return $;
       }
     }
   };
-  this.layers = [];
-  this.layerSet = (function() {
+  $.layerSet = (function() {
     var layer = 0;
     return function(n) {
       if (typeof n == "number") {
         layer = n;
-        this.canvas = this.layers[layer];
-        this.ctx = this.layers[layer].getContext("2d");
+        $.canvas = $.layers[layer];
+        $.ctx = $.layers[layer].getContext("2d");
       }
       if (datamode) {
         if (!persistentDatamode) {
           datamode = false;
         }
-        return [this, layer];
+        return [$, layer];
       } else {
-        return this;
+        return $;
       }
     }
   })();
-  this.layer.add();
-  this.layerSet(0);
+  $.layer.add();
+  $.layerSet(0);
   
-  this.fragments = [];
-  this.fragment = {
+  $.fragments = [];
+  $.fragment = {
     add: function(width, height) {
       var fragment = new CuddlyWoof(width, height);
       fragment.drawUp = function(x, y) {
-        this.image(fragment.canvas)
+        $.image(fragment.canvas)
       };
-      this.fragments.push();
+      $.fragments.push();
     }
   }
-  this.draw = function(dest, x, y) {
-    dest.drawImage(this.canvas, x, y);
+  $.draw = function(dest, x, y) {
+    dest.drawImage($.canvas, x, y);
   }
   
-  this.color = function(color) {
-    oldColor = this.ctx.fillStyle;
+  $.color = function(color) {
+    oldColor = $.ctx.fillStyle;
     if (color) {
-      this.ctx.fillStyle = color;
+      $.ctx.fillStyle = color;
     }
     if (datamode) {
       if (!persistentDatamode) {
         datamode = false;
       }
-      return [this, oldColor];
+      return [$, oldColor];
     } else {
-      return this;
+      return $;
     }
   }
   
-  this.clear = function(c) {
+  $.clear = function(c) {
     if (c) {
-      var oldColor = this._color(c)[1];
-      this.$
-       .rect.fill(0, 0, this.canvas.width, this.canvas.height)
+      var oldColor = $._color(c)[1];
+      $.$
+       .rect.fill(0, 0, $.canvas.width, $.canvas.height)
        ._. color(oldColor); // cuddly-woof adds a whole new operator to JavaScript, the pokerface operator.
     } else {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      $.ctx.clearRect(0, 0, $.canvas.width, $.canvas.height);
     }
     if (datamode) {
       if (!persistentDatamode) {
         datamode = false;
       }
-      return [this, c];
+      return [$, c];
     } else {
-      return this;
+      return $;
     }
   }
-  this.rect = {
+  $.rect = {
     fill: function(x, y, w, h, c) {
       if (c) {
-        var oldColor = this ._. color(c)[1];
-        this.ctx.fillRect(x, y, w, h);
-        this.color(oldColor);
+        var oldColor = $ ._. color(c)[1];
+        $.ctx.fillRect(x, y, w, h);
+        $.color(oldColor);
       } else {
-        this.ctx.fillRect(x, y, w, h);
+        $.ctx.fillRect(x, y, w, h);
       }
       if (datamode) {
         if (!persistentDatamode) {
           datamode = false;
         }
-        return [this, c];
+        return [$, c];
       } else {
-        return this;
+        return $;
       }
     }
   };
-  this.image = function(image, x, y) {
-    this.ctx.drawImage(image, x, y);
-    return this;
+  $.image = function(image, x, y) {
+    $.ctx.drawImage(image, x, y);
+    return $;
   }
   
-  this.append = function(elem) {
+  $.append = function(elem) {
     if (elem.constructor = String) {
-      document.getElementById(elem).appendChild(this.canvas);
+      document.getElementById(elem).appendChild($.canvas);
     } else if (elem instanceof HTMLElement) {
-      elem.appendChild(this.canvas);
+      elem.appendChild($.canvas);
     }
     if (datamode) {
       if (!persistentDatamode) {
         datamode = false;
       }
-      return [this, elems];
+      return [$, elems];
     } else {
-      return this;
+      return $;
     }
   }
   
-  return this;
+  return $;
 };
